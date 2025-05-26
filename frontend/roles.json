@@ -1,0 +1,154 @@
+[
+  {
+    "bindings": {
+      "members": "serviceAccount:service-438198665414@gcp-sa-artifactregistry.iam.gserviceaccount.com",
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:438198665414@cloudbuild.gserviceaccount.com",
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:service-438198665414@gcp-sa-cloudbuild.iam.gserviceaccount.com",
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:service-438198665414@compute-system.iam.gserviceaccount.com",
+      "role": "roles/compute.serviceAgent"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:service-438198665414@containerregistry.iam.gserviceaccount.com",
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:438198665414-compute@developer.gserviceaccount.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:438198665414@cloudservices.gserviceaccount.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:AlyssaLaReyes@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:agalindor579@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:andyhnguyen28@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:einar.gatchalian@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:jobrien.ai@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:lanidv2433@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:sravtall@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:tianazhen@gmail.com",
+      "role": "roles/editor"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:service-438198665414@gcp-sa-networkmanagement.iam.gserviceaccount.com",
+      "role": "roles/networkmanagement.serviceAgent"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "user:jb@soundethics.ai",
+      "role": "roles/owner"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:service-438198665414@gcp-sa-pubsub.iam.gserviceaccount.com",
+      "role": "roles/pubsub.serviceAgent"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  },
+  {
+    "bindings": {
+      "members": "serviceAccount:service-438198665414@serverless-robot-prod.iam.gserviceaccount.com",
+      "role": "roles/run.serviceAgent"
+    },
+    "etag": "BwY0kvP_zoo=",
+    "version": 1
+  }
+]

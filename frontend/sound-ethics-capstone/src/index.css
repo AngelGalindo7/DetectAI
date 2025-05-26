@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+@font-face {
+  font-family: 'FKScreamer';
+  src: url('./fonts/FKScreamerTrial-Regular-BF6571330a60d38.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'FKScreamer';
+  src: url('./fonts/FKScreamerTrial-Bold-BF6571330a76e9b.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.fk-screamer {
+  font-family: 'FKScreamer', sans-serif;
+}
+
+@font-face{
+  font-family: 'PPEditorial';
+    src: url('./fonts/PPEditorialNew-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.pp-editorial {
+  font-family: 'PPEditorial', sans-serif;
+}
+
+#root{
+  padding:0;
+}
+/* Use this class when you want the bold version */
+.fk-screamer-bold {
+  font-family: 'FKScreamer', sans-serif;
+  font-weight: bold;
+}
+

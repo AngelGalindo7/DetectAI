@@ -8,6 +8,9 @@ import ProgressBar from './ProgressBar';
 
 export default function LoadingPage() {  
   
+
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const [progress, setProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState('Starting analysis...');
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ export default function LoadingPage() {
 
   const interval = setInterval(async () => {
     try {
-      const progressResponse = await fetch(`https://audio-api-438198665414.us-central1.run.app/progress/${jobId}`);
+      const progressResponse = await fetch(`${API_BASE_URL}/progress/${jobId}`);
 
       if (progressResponse.ok) {
         const progressData = await progressResponse.json();
@@ -82,7 +85,7 @@ export default function LoadingPage() {
 const fetchResultsWithRetry = async (jobId, retries = 5, delay = 500) => {
   for (let i = 0; i < retries; i++) {
     try {
-      const resultsResponse = await fetch(`https://audio-api-438198665414.us-central1.run.app/results/${jobId}`);
+      const resultsResponse = await fetch(`${API_BASE_URL}/results/${jobId}`);
       const status = resultsResponse.status;
 
       if (status === 200) {
@@ -206,7 +209,7 @@ const fetchResultsWithRetry = async (jobId, retries = 5, delay = 500) => {
           formData.append('file', audioFile);
           setUploadStatus('Uploading file...');
   
-          const response = await fetch('https://audio-api-438198665414.us-central1.run.app/predict', {
+          const response = await fetch(`${API_BASE_URL}/predict`, {
             method: 'POST',
             body: formData,
           });

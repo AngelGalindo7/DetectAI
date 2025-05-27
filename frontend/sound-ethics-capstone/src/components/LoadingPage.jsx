@@ -8,9 +8,7 @@ import ProgressBar from './ProgressBar';
 
 export default function LoadingPage() {  
   
-
   const API_BASE_URL = import.meta.env.VITE_API_URL;
-
   const [progress, setProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState('Starting analysis...');
   const navigate = useNavigate();

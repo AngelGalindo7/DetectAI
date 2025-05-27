@@ -9,7 +9,6 @@ import GenerateSong from './components/GenerateSong.jsx'
 import SongAI from './components/SongAI.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import DetectedAI from './components/DetectedAI.jsx'
-import NoAIDetected from './components/NoAIDetected.jsx'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -22,7 +21,6 @@ function App() {
         <Route path="/insert" element={<InsertAudioPage/>}></Route>
         <Route path="/loadingpage" element={<LoadingPage/>}></Route>
         <Route path="/detectedai" element={<DetectedAI detected={false}></DetectedAI>}></Route>
-        <Route path="/notdetectedai" element={<NoAIDetected detected={true}></NoAIDetected>}></Route>
       </Routes>
     </Router>  
   )

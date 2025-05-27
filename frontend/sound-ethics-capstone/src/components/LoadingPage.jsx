@@ -82,7 +82,7 @@ export default function LoadingPage() {
   intervalRef.current = interval;
 };
 
-const fetchResultsWithRetry = async (jobId, retries = 5, delay = 500) => {
+const fetchResultsWithRetry = async (jobId, retries = 8, delay = 500) => {
   for (let i = 0; i < retries; i++) {
     try {
       const resultsResponse = await fetch(`${API_BASE_URL}/results/${jobId}`);
@@ -94,13 +94,16 @@ const fetchResultsWithRetry = async (jobId, retries = 5, delay = 500) => {
         setUploadStatus("Results ready! Redirecting...");
         console.log("Results data:", resultsData);
 
-        // 🔍 Make sure the result field matches your backend response (check this)
-        const resultLabel = resultsData.label?.toUpperCase(); // or resultsData.result?.toUpperCase()
-        const route = resultLabel === "FAKE" ? "/detectedai" : "/notdetectedai";
+        const isAIDetected = resultsData.prediction?.toUpperCase() === "AI";
 
         setTimeout(() => {
-          navigate(route, { state: { data: resultsData } });
-        }, 1000);
+        navigate("/detectedai", {
+          state: {
+            detected: isAIDetected,
+            
+          }
+        });
+      }, 1000);
         return;
       } else if (status === 202) {
         console.log(`Attempt ${i + 1}: Results not ready yet`);

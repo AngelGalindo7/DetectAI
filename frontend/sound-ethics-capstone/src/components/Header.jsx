@@ -2,31 +2,32 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
 import './header.css';
-import SoundEthicsLogoBlack from '../assets/sound-ethics-logo-black.svg'; 
+import SoundEthicsLogoBlack from '../assets/sound-ethics-logo-black.svg';
 import SoundEthicsLogoGreen from '../assets/sound-ethics-logo-green.svg';
 import { motion, AnimatePresence} from 'framer-motion';
 import SoundEthicsStage from '../assets/stage.jpg';
 import Electricty from '../assets/Electricity-cropped.svg';
+
 export default function Header() {
     const navigate = useNavigate();  // Initialize the navigate function
 
     const navigateHome = () => {
-        navigate('/')
-    }
+        navigate('/');
+    };
 
     const navigateGenerate = () => {
-        navigate('/generate')
-    }
-    
+        navigate('/generate');
+    };
+
     const navigateInsert= () => {
-        navigate('/insert')
-    }
+        navigate('/insert');
+    };
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = async() => {
         setIsMenuOpen(!isMenuOpen);
     };
-    
+
     return (
         <div className='fixed mb-15 flex flex-col w-full h-15 items-center fk-screamer-bold z-2'>
             <AnimatePresence mode='wait'>
@@ -46,9 +47,9 @@ export default function Header() {
                         transition={{
                             duration: 0.25
                         }}
-                    >   
+                    >
                         <div className='relative flex h-full w-1/2 bg-[#1D1D1D] items-center justify-center'>
-                            <motion.img 
+                            <motion.img
                                 className='absolute h-full w-full bg-[#1D1D1D]'
                                 initial={{opacity: 0}}
                                 animate={{opacity: 1}}
@@ -78,7 +79,7 @@ export default function Header() {
                             />
                         </div>
                         <div className='flex flex-col h-full w-1/2 bg-[#D6FF62] items-center text-black px-3 z-2'>
-                            <motion.div 
+                            <motion.div
                                 className='relative h-full w-full'
                                 initial={{opacity: 0}}
                                 animate={{opacity: 1}}
@@ -93,8 +94,8 @@ export default function Header() {
                                     duration:0.5
                                 }}
                             >
-                                <div 
-                                    className="absolute flex h-15 w-full text-4xl items-center justify-end" 
+                                <div
+                                    className="absolute flex h-15 w-full text-4xl items-center justify-end"
                                     onClick={toggleMenu}  // Add click handler
                                     style={{ cursor: 'pointer' }}  // Optionally, add a pointer cursor for clarity
                                 >
@@ -102,37 +103,42 @@ export default function Header() {
                                 </div>
 
                                 <div className="h-full py-15 w-full flex flex-col items-center justify-center text-9xl gap-4">
-                                <div 
-                                    onClick={navigateHome} 
-                                    className="hover:text-gray-500 transition-colors cursor-pointer"
-                                >
-                                    Home
-                                </div>
-                                <div 
-                                    onClick={navigateGenerate} 
-                                    className="hover:text-gray-500 transition-colors cursor-pointer"
-                                >
-                                    Generate
-                                </div>
-                                <div 
-                                    onClick={navigateInsert} 
-                                    className="hover:text-gray-500 transition-colors cursor-pointer"
-                                >
-                                    Detect
-                                </div>
+                                    <div
+                                        onClick={() => { navigateHome(); toggleMenu(); }} // Also close menu on navigation
+                                        className="hover:text-gray-500 transition-colors cursor-pointer"
+                                    >
+                                        Home
+                                    </div>
+                                    <div
+                                        onClick={() => { navigateGenerate(); toggleMenu(); }} // Also close menu on navigation
+                                        className="hover:text-gray-500 transition-colors cursor-pointer"
+                                    >
+                                        Generate
+                                    </div>
+                                    <div
+                                        onClick={() => { navigateInsert(); toggleMenu(); }} // Also close menu on navigation
+                                        className="hover:text-gray-500 transition-colors cursor-pointer"
+                                    >
+                                        Detect
+                                    </div>
                                 </div>
 
-                            </motion.div>   
+                            </motion.div>
                         </div>
                     </motion.div>
-                )}    
+                )}
             </AnimatePresence>
             <div className="flex w-full h-full items-center justify-between bg-black px-3">
-                <div className="text-left">
+                {/* ---- MODIFICATION START ---- */}
+                <div
+                    className="text-left cursor-pointer" // Added cursor-pointer
+                    onClick={navigateHome} // Added onClick handler
+                >
                     <img src={SoundEthicsLogoGreen} id="logo-header" alt="Sound Ethics Logo"/>
                 </div>
-                <div 
-                    className="flex h-full text-4xl items-center justify-center text-[#D6FF62]" 
+                {/* ---- MODIFICATION END ---- */}
+                <div
+                    className="flex h-full text-4xl items-center justify-center text-[#D6FF62]"
                     onClick={toggleMenu}  // Add click handler
                     style={{ cursor: 'pointer' }}  // Optionally, add a pointer cursor for clarity
                 >
@@ -141,6 +147,6 @@ export default function Header() {
             </div>
             <div className='w-full bg-[#1E1E1E] h-0.25 px-3'></div>
         </div>
-        
+
     );
 }

@@ -75,7 +75,7 @@ export default function LoadingPage() {
         setUploadStatus("Connection lost. Still trying...");
       }
     }
-  }, 500);
+  }, 200);
 
   intervalRef.current = interval;
 };

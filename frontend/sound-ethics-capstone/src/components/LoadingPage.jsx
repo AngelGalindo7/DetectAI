@@ -33,14 +33,18 @@ export default function LoadingPage() {
     clearInterval(intervalRef.current);
   }
 
+  let consecutiveErrors = 0;
+  const maxErrors = 10;
 
   const interval = setInterval(async () => {
     try {
-      const progressResponse = await fetch(`${API_BASE_URL}/progress/${jobId}`);
+      const progressResponse = await fetch(`${API_BASE_URL}/progress/${jobId}`, {
+        timeout: 10000
+      });
 
       if (progressResponse.ok) {
         const progressData = await progressResponse.json();
-
+        consecutiveErrors = 0;
         disconnectedSince = null;
 
         if (progressData.progress !== undefined) {
@@ -59,31 +63,48 @@ export default function LoadingPage() {
           await new Promise(res => setTimeout(res, 500));
           await fetchResultsWithRetry(jobId);
         }
+      } else if (progressResponse.status === 404) {
+        // Job not found - might have been cleaned up
+        setUploadStatus("Job expired or not found. Please try again.");
+        clearInterval(interval);
+        intervalRef.current = null;
+        setTimeout(() => navigate('/'), 3000);
       } else {
-        if (!disconnectedSince) {
-          disconnectedSince = Date.now();
-        } else if (Date.now() - disconnectedSince > 5000) {
-          setUploadStatus("Server is taking too long to respond. Still retrying...");
-        }
+        consecutiveErrors++;
+        handleConnectionError(consecutiveErrors, maxErrors, interval);
       }
     } catch (error) {
       console.warn("Polling error:", error);
-
-      if (!disconnectedSince) {
-        disconnectedSince = Date.now();
-      } else if (Date.now() - disconnectedSince > 5000) {
-        setUploadStatus("Connection lost. Still trying...");
-      }
+      consecutiveErrors++;
+      handleConnectionError(consecutiveErrors, maxErrors, interval);
     }
-  }, 200);
+  }, 500);
 
   intervalRef.current = interval;
+};
+
+const handleConnectionError = (consecutiveErrors, maxErrors, interval) => {
+  if (consecutiveErrors >= maxErrors) {
+    setUploadStatus("Too many connection errors. Please refresh and try again.");
+    clearInterval(interval);
+    intervalRef.current = null;
+    setTimeout(() => navigate('/'), 5000);
+    return;
+  }
+
+   if (!disconnectedSince) {
+    disconnectedSince = Date.now();
+  } else if (Date.now() - disconnectedSince > 5000) {
+    setUploadStatus(`Connection issues (${consecutiveErrors}/${maxErrors}). Still retrying...`);
+  }
 };
 
 const fetchResultsWithRetry = async (jobId, retries = 8, delay = 500) => {
   for (let i = 0; i < retries; i++) {
     try {
-      const resultsResponse = await fetch(`${API_BASE_URL}/results/${jobId}`);
+      const resultsResponse = await fetch(`${API_BASE_URL}/results/${jobId}`, {
+        timeout:15000
+      });
       const status = resultsResponse.status;
 
       if (status === 200) {
@@ -92,7 +113,7 @@ const fetchResultsWithRetry = async (jobId, retries = 8, delay = 500) => {
         setUploadStatus("Results ready! Redirecting...");
         console.log("Results data:", resultsData);
 
-        const isAIDetected = resultsData.prediction?.toUpperCase() === "AI";
+        const isAIDetected = resultsData.label?.toUpperCase() === "FAKE";
 
         setTimeout(() => {
         navigate("/detectedai", {
@@ -184,15 +205,6 @@ const fetchResultsWithRetry = async (jobId, retries = 8, delay = 500) => {
     };
   }, []);
 
-  useEffect(() => {
-    // Clear any existing interval when component mounts or unmounts
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
-  }, []);
 
   useEffect(() => {
       //remove if you dont want to redirect if no file is uploaded
@@ -213,6 +225,7 @@ const fetchResultsWithRetry = async (jobId, retries = 8, delay = 500) => {
           const response = await fetch(`${API_BASE_URL}/predict`, {
             method: 'POST',
             body: formData,
+            timeout: 30000
           });
 
           if (response.ok) {

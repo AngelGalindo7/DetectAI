@@ -78,7 +78,7 @@ export default function LoadingPage() {
       consecutiveErrors++;
       handleConnectionError(consecutiveErrors, maxErrors, interval);
     }
-  }, 500);
+  }, 300);
 
   intervalRef.current = interval;
 };

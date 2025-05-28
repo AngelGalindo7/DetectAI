@@ -9,6 +9,8 @@ import ProgressBar from './ProgressBar';
 export default function LoadingPage() {  
   
   const API_BASE_URL = import.meta.env.VITE_API_URL;
+  
+  //import.meta.env.VITE_API_URL;
   const [progress, setProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState('Starting analysis...');
   const navigate = useNavigate();
@@ -78,7 +80,7 @@ export default function LoadingPage() {
       consecutiveErrors++;
       handleConnectionError(consecutiveErrors, maxErrors, interval);
     }
-  }, 300);
+  }, 500);
 
   intervalRef.current = interval;
 };

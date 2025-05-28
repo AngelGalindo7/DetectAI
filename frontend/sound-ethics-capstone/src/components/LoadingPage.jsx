@@ -92,7 +92,7 @@ const fetchResultsWithRetry = async (jobId, retries = 8, delay = 500) => {
         setUploadStatus("Results ready! Redirecting...");
         console.log("Results data:", resultsData);
 
-        const isAIDetected = resultsData.label?.toUpperCase() === "FAKE";
+        const isAIDetected = resultsData.prediction?.toUpperCase() === "AI";
 
         setTimeout(() => {
         navigate("/detectedai", {

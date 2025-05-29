@@ -181,7 +181,7 @@ export default function GenerateSong() {
             </div>
         </div>
         <div className='flex flex-col px-3 py-15 w-full items-center bg-[#1E1E1E] fk-screamer space-y-4 z-1'>
-            <div className='w-full fk-screamer-bold'>
+            {/* <div className='w-full fk-screamer-bold'>
                 <div className='text-4xl'>ENTER YOUR STYLE</div>
                 <div>DESCRIBE YOUR SONG STYLE</div>
                 <textarea
@@ -191,10 +191,10 @@ export default function GenerateSong() {
                     placeholder='Example: A dark trap beat with 808s and atmospheric synths inspired by dystopian sci-fi'
                 >
                 </textarea>
-            </div>
+            </div> */}
 
             <div className='flex flex-col w-full z-1'>
-                <div className='text-4xl fk-screamer-bold mb-2'>OR CHOOSE A STYLE PRESET</div>
+                <div className='text-4xl fk-screamer-bold mb-2'>CHOOSE A STYLE PRESET</div>
                 <StyleCarousel className="bg-white" selecetedStyle={selecetedStyle} handleCardChange={handleCardChange}/>
             </div>
 

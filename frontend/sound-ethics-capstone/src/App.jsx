@@ -9,6 +9,8 @@ import GenerateSong from './components/GenerateSong.jsx'
 import SongAI from './components/SongAI.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import DetectedAI from './components/DetectedAI.jsx'
+
+
 function App() {
   const [count, setCount] = useState(0)
 

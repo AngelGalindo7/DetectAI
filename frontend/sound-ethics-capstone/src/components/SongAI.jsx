@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Header from './Header';
-import { ImVolumeLow } from "react-icons/im";
-
+import { ImVolumeLow, ImShare2, ImDownload3 } from "react-icons/im";
+import { RiAiGenerate2 } from "react-icons/ri";
+import { SiDowndetector } from "react-icons/si";
+import CustomAudioPlayer from './AudioPlayer'
+import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
 const song = {
     title: "Midnight Cascade",
@@ -34,108 +38,110 @@ const song = {
 };
 
 export default function SongAI() {
+    const navigate = useNavigate();  // Initialize the navigate function
+    const navigateGenerate = () => {
+        navigate('/generate')
+    }
+    const navigateInsert= () => {
+        navigate('/insert')
+    }
+
+    const [searchParams] = useSearchParams();
+  
+    const audioUrl = decodeURIComponent(searchParams.get('audio') || '');
+    const title = decodeURIComponent(searchParams.get('title') || '');
+    const genre = decodeURIComponent(searchParams.get('genre') || '');
+    const today = new Date().toISOString().split('T')[0];
+
+    const downloadAudio = async () => {
+        if (!audioUrl) {
+            alert('No audio file available to download');
+            return;
+        }
+
+        try {
+            // Show loading state (optional)
+            console.log('Starting download...');
+            
+            // Fetch the audio data
+            const response = await fetch(audioUrl);
+            
+            if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            // Get the audio data as a blob
+            const blob = await response.blob();
+            
+            // Create a download URL
+            const downloadUrl = window.URL.createObjectURL(blob);
+            
+            // Extract filename from URL or use default
+            const filename = getFilenameFromUrl(audioUrl) || 'audio-download.mp3';
+            
+            // Create and trigger download
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            
+            // Cleanup
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(downloadUrl);
+            
+            console.log('Download completed');
+        } catch (error) {
+            console.error('Download failed:', error);
+            alert('Download failed. Please try again.');
+        }
+        };
+
+        const getFilenameFromUrl = (url) => {
+            try {
+                const pathname = new URL(url).pathname;
+                return 'audio-file.mp3';
+            } catch {
+                return 'audio-file.mp3';
+            }
+        };
+
     return (
-        <div className="w-full text-[#D6FF62] fk-screamer tracking-wide">
+        <div className="relative flex w-full text-[#D6FF62] bg-black fk-screamer tracking-wide">
             <Header/>
-            <div className='flex flex-col w-full px-3 pt-15 bg-black fk-screamer space-y-10'>
-                <div className='flex w-full items-center justify-between'>
-                    <div class=" 
-                        border-l-[0px] border-l-transparent
-                        border-t-[50px] border-[#D6FF62]
-                        border-r-[50px] border-r-transparent">
-                    </div>
-                    <div className='text-lg px-4 text-black bg-[#D6FF62] fk-screamer-bold'>AI GENERATED</div>
-                </div>
-
-                <div className='text-8xl fk-screamer-bold'>{song.title}</div>
+            <div className='flex mx-auto justify-center flex-col w-[60%] px-3 pt-15 bg-black fk-screamer min-h-screen space-y-10 z-1'>
+                <div className='text-8xl fk-screamer-bold z-10'>{title}</div>
                 
-                <div className='flex text-2xl fk-screamer-bold space-x-5'>
-                    <div>{song.style}</div>
-                    <div>{song.duration}</div>
-                    <div>GENERATED {song.generatedDate}</div>
+                <div className='flex text-2xl fk-screamer-bold space-x-5 z-10'>
+                    <div>{genre}</div>
+                    <div>GENERATED {today}</div>
                 </div>
+                
+                <CustomAudioPlayer audioUrl={audioUrl}></CustomAudioPlayer>
 
-                <div className='border-2 border-[#D6FF62] h-40 mt-30 bg-[#1E1E1E]'>
-
-                </div>
-
-                <div className='flex w-full items-center space-x-4'>
-                    <div className='flex w-15 h-15 bg-[#D6FF62] items-center justify-center'>
-                        <div className="w-6 h-6 bg-black transform translate-x-0.5" 
-                            style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }}>
-                        </div>
-                    </div>
-                    <div className='w-full'>
-                        <div className='h-3 bg-[#1E1E1E]'></div>
-                        <div className='flex justify-between'>
-                            <div>{song.currentTime}</div>
-                            <div>{song.duration}</div>
-                        </div>
-                    </div>
-                    <div className='flex items-center'>
-                        <ImVolumeLow/>
-                        <div className='w-20 h-2 bg-[#1E1E1E]'></div>
-                    </div>
-                </div>
-
-                <div className='flex flex-col w-full bg-[#1E1E1E] py-10 px-25 items-center text-2xl space-y-20'>
-                    <div className='flex w-full'>
-                        <div className='w-1/3'>
-                            <div>STYLE</div>
-                            <div className='text-4xl fk-screamer-bold'>{song.style}</div>
-                        </div>
-                        <div className='w-1/3'>
-                            <div>TEMPO</div>
-                            <div className='text-4xl fk-screamer-bold'>{song.tempo}</div>
-                        </div>
-                        <div className='w-1/3'>
-                            <div>MOOD</div>
-                            <div className='text-4xl fk-screamer-bold'>{song.mood}</div>
-                        </div>
-                    </div>
-                    <div className='flex w-full'>
-                        <div className='w-1/3'>
-                            <div>KEY</div>
-                            <div className='text-4xl fk-screamer-bold'>{song.key}</div>
-                        </div>
-                        <div className='w-1/3'>
-                            <div>INSTRUMENTS</div>
-                            <div className='text-4xl fk-screamer-bold'>{song.instruments}</div>
-                        </div>
-                        <div className='w-1/3'>
-                            <div>VOCAL TYPE</div>
-                            <div className='text-4xl fk-screamer-bold'>{song.vocalType}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className='flex w-full text-xl text-black space-x-3 fk-screamer-bold'>
-                    <div className='bg-[#D6FF62] py-2 px-15'>
-                        <div></div>
-                        <div>SHARE</div>
-                    </div>
-                    <div className='bg-[#D6FF62] py-2 px-15'>
-                        <div></div>
+                <div className='flex w-full text-xl text-black space-x-3 fk-screamer-bold  z-10'>
+                    <div 
+                        className='flex w-1/6 items-center justify-center bg-[#D6FF62] py-2 px-2 space-x-2'
+                        onClick={downloadAudio}
+                    >
+                        <ImDownload3/>
                         <div>DOWNLOAD</div>
                     </div>
-                    <div className='bg-[#D6FF62] py-2 px-15'>
-                        <div></div>
+                    <div 
+                        className='flex w-1/6 items-center justify-center bg-[#D6FF62] py-2 px-2 space-x-2'
+                        onClick={navigateGenerate}
+                    >
+                        <RiAiGenerate2/>
                         <div>REGENERATE</div>
                     </div>
-                    <div className='bg-[#D6FF62] py-2 px-15'>
-                        <div></div>
+                    <div 
+                        className='flex w-1/6 items-center justify-center bg-[#D6FF62] py-2 px-2 space-x-2'
+                        onClick={navigateInsert}
+                    >
+                        <SiDowndetector/>
                         <div>DETECT AI</div>
                     </div>
                 </div>
-
-                <div className='text-6xl fk-screamer-bold'>LYRICS</div>
-                
-                <div className='bg-[#1E1E1E] text-3xl p-5'>
-                    {song.lyrics.map((line, index) => (
-                    <div>{line}</div>
-                ))}
-                </div>
-
             </div>
         </div>
     )

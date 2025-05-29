@@ -29,7 +29,7 @@ export default function Header() {
     };
 
     return (
-        <div className='fixed mb-15 flex flex-col w-full h-15 items-center fk-screamer-bold z-2'>
+        <div className='fixed mb-15 flex flex-col w-full h-15 items-center fk-screamer-bold z-21'>
             <AnimatePresence mode='wait'>
                 {isMenuOpen && (
                     <motion.div

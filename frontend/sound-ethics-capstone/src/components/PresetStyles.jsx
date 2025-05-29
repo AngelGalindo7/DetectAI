@@ -73,16 +73,16 @@ export function StyleCard({style}) {
     </div>
 }
 
-export default function StyleCarousel({selecetedStyle, setSelectedStyle}) {
+export default function StyleCarousel({selecetedStyle, handleCardChange}) {
     const handleSelect = (index) => {
-        // If clicking the same box, toggle selection
-        if (selecetedStyle !== index) {
-          setSelectedStyle(index);
-        }
-        else {
-            setSelectedStyle(-1);
-        }
-      };
+      // If clicking the same box, toggle selection
+      if (selecetedStyle !== index) {
+        handleCardChange(index);
+      }
+      else {
+        handleCardChange(-1);
+      }
+    };
 
     return (
         <Carousel responsive={responsive}>

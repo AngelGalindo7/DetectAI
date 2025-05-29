@@ -51,7 +51,7 @@ const musicStyles = [
 ];
 
 export default function GenerateSong() {
-    const API_BASE_URL = "http://localhost:8080";
+    const API_BASE_URL = import.meta.env.FLASK_API_URL;
     const [text, setText] = useState('');
     const [selecetedStyle, setSelectedStyle] = useState(-1);
     const [audioUrl, setAudioUrl] = useState(null);
